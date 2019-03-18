@@ -979,6 +979,9 @@ func (c *Command) ValidateArgs(args []string) error {
 	if c.Args == nil {
 		return nil
 	}
+	if err := validateArgs(c, args); err != nil {
+		return err
+	}
 	return c.Args(c, args)
 }
 
