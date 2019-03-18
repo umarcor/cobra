@@ -16,6 +16,9 @@ before_install:
   - go get -u github.com/mitchellh/gox
   - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin latest
 
+env:
+  - GO111MODULE=on
+
 matrix:
   allow_failures:
     - go: tip
