@@ -393,12 +393,14 @@ The following validators are built in:
 
 - `NoArgs` - the command will report an error if there are any positional args.
 - `ArbitraryArgs` - the command will accept any args.
-- `OnlyValidArgs` - the command will report an error if there are any positional args that are not in the `ValidArgs` field of `Command`.
 - `MinimumNArgs(int)` - the command will report an error if there are not at least N positional args.
 - `MaximumNArgs(int)` - the command will report an error if there are more than N positional args.
 - `ExactArgs(int)` - the command will report an error if there are not exactly N positional args.
-- `ExactValidArgs(int)` - the command will report an error if there are not exactly N positional args OR if there are any positional args that are not in the `ValidArgs` field of `Command`
 - `RangeArgs(min, max)` - the command will report an error if the number of args is not between the minimum and maximum number of expected args.
+
+If field `ValidArgs` of type `[]string` is defined in `Command`, apart from checking the number of positional arguments according to the validators above, the command will report an error if there are any positional args that are not in the list.
+
+> NOTE: `OnlyValidArgs` and `ExactValidArgs(int)` are now deprecated. Instead, use `ArbitraryArgs` and `ExactArgs(int)`.
 
 An example of setting the custom validator:
 

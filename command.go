@@ -950,6 +950,13 @@ func (c *Command) ValidateArgs(args []string) error {
 	if c.Args == nil {
 		return nil
 	}
+	if len(c.ValidArgs) > 0 {
+		for _, v := range args {
+			if !stringInSlice(v, c.ValidArgs) {
+				return fmt.Errorf("invalid argument %q for %q%s", v, c.CommandPath(), c.findSuggestions(args[0]))
+			}
+		}
+	}
 	return c.Args(c, args)
 }
 
