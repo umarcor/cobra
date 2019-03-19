@@ -1,9 +1,8 @@
-module github.com/spf13/cobra
+module github.com/umarcor/cobra
 
 go 1.12
 
 require (
-	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/cpuguy83/go-md2man v1.0.10
 	github.com/inconshreveable/mousetrap v1.0.0
 	github.com/mitchellh/go-homedir v1.1.0
