@@ -27,10 +27,8 @@ Many of the most widely used Go projects are built using Cobra, such as:
 [Linkerd](https://linkerd.io/),
 etc.
 
-[![Build Status](https://travis-ci.org/spf13/cobra.svg "Travis CI status")](https://travis-ci.org/spf13/cobra)
-[![CircleCI status](https://circleci.com/gh/spf13/cobra.png?circle-token=:circle-token "CircleCI status")](https://circleci.com/gh/spf13/cobra)
-[![GoDoc](https://godoc.org/github.com/spf13/cobra?status.svg)](https://godoc.org/github.com/spf13/cobra)
-[![Go Report Card](https://goreportcard.com/badge/github.com/spf13/cobra)](https://goreportcard.com/report/github.com/spf13/cobra)
+[![GoDoc](https://godoc.org/github.com/umarcor/cobra?status.svg)](https://godoc.org/github.com/umarcor/cobra)
+[![Go Report Card](https://goreportcard.com/badge/github.com/umarcor/cobra)](https://goreportcard.com/report/github.com/umarcor/cobra)
 
 # Table of Contents
 
@@ -110,7 +108,7 @@ have children commands and optionally run an action.
 
 In the example above, 'server' is the command.
 
-[More about cobra.Command](https://godoc.org/github.com/spf13/cobra#Command)
+[More about cobra.Command](https://godoc.org/github.com/umarcor/cobra#Command)
 
 ## Flags
 
@@ -130,12 +128,12 @@ Using Cobra is easy. First, use `go get` to install the latest version
 of the library. This command will install the `cobra` generator executable
 along with the library and its dependencies:
 
-    go get -u github.com/spf13/cobra/cobra
+    go get -u github.com/umarcor/cobra/cobra
 
 Next, include Cobra in your application:
 
 ```go
-import "github.com/spf13/cobra"
+import "github.com/umarcor/cobra"
 ```
 
 # Getting Started
@@ -172,7 +170,7 @@ func main() {
 Cobra provides its own program that will create your application and add any
 commands you want. It's the easiest way to incorporate Cobra into your application.
 
-[Here](https://github.com/spf13/cobra/blob/master/cobra/README.md) you can find more information about it.
+[Here](https://github.com/umarcor/cobra/blob/master/cobra/README.md) you can find more information about it.
 
 ## Using the Cobra Library
 
@@ -216,7 +214,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/cobra"
+	"github.com/umarcor/cobra"
 	"github.com/spf13/viper"
 )
 
@@ -316,7 +314,7 @@ package cmd
 import (
   "fmt"
 
-  "github.com/spf13/cobra"
+	"github.com/umarcor/cobra"
 )
 
 func init() {
@@ -467,7 +465,7 @@ import (
   "fmt"
   "strings"
 
-  "github.com/spf13/cobra"
+	"github.com/umarcor/cobra"
 )
 
 func main() {
@@ -634,7 +632,7 @@ package main
 import (
   "fmt"
 
-  "github.com/spf13/cobra"
+	"github.com/umarcor/cobra"
 )
 
 func main() {
@@ -770,4 +768,4 @@ Cobra can generate zsh-completion file. Read more about it in
 
 # License
 
-Cobra is released under the Apache 2.0 license. See [LICENSE.txt](https://github.com/spf13/cobra/blob/master/LICENSE.txt)
+Cobra is released under the Apache 2.0 license. See [LICENSE.txt](https://github.com/umarcor/cobra/blob/master/LICENSE.txt)
