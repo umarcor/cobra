@@ -115,7 +115,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/spf13/cobra"
+	"github.com/umarcor/cobra"
 )
 
 // {{ .CmdName }}Cmd represents the {{ .CmdName }} command
