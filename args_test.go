@@ -57,49 +57,74 @@ func (tc *argsTestcase) test(t *testing.T) {
 	}
 }
 
-func TestArgs(t *testing.T) {
-	tests := map[string]argsTestcase{
-		"No        |       |  ":                   {"", NoArgs, false, []string{}},
-		"No        |       | Arb":                 {"unknown", NoArgs, false, []string{"one"}},
-		"No        | Valid | Valid":               {"unknown", NoArgs, true, []string{"one"}},
-		"Arbitrary |       | Arb":                 {"", ArbitraryArgs, false, []string{"a", "b"}},
-		"Arbitrary | Valid | Valid":               {"", ArbitraryArgs, true, []string{"one", "two"}},
-		"Arbitrary | Valid | Invalid":             {"invalid", ArbitraryArgs, true, []string{"a"}},
-		"MinimumN  |       | Arb":                 {"", MinimumNArgs(2), false, []string{"a", "b", "c"}},
-		"MinimumN  | Valid | Valid":               {"", MinimumNArgs(2), true, []string{"one", "three"}},
-		"MinimumN  | Valid | Invalid":             {"invalid", MinimumNArgs(2), true, []string{"a", "b"}},
-		"MinimumN  |       | Less":                {"less", MinimumNArgs(2), false, []string{"a"}},
-		"MinimumN  | Valid | Less":                {"less", MinimumNArgs(2), true, []string{"one"}},
-		"MinimumN  | Valid | LessInvalid":         {"invalid", MinimumNArgs(2), true, []string{"a"}},
-		"MaximumN  |       | Arb":                 {"", MaximumNArgs(3), false, []string{"a", "b"}},
-		"MaximumN  | Valid | Valid":               {"", MaximumNArgs(2), true, []string{"one", "three"}},
-		"MaximumN  | Valid | Invalid":             {"invalid", MaximumNArgs(2), true, []string{"a", "b"}},
-		"MaximumN  |       | More":                {"more", MaximumNArgs(2), false, []string{"a", "b", "c"}},
-		"MaximumN  | Valid | More":                {"more", MaximumNArgs(2), true, []string{"one", "three", "two"}},
-		"MaximumN  | Valid | MoreInvalid":         {"invalid", MaximumNArgs(2), true, []string{"a", "b", "c"}},
-		"Exact     |       | Arb":                 {"", ExactArgs(3), false, []string{"a", "b", "c"}},
-		"Exact     | Valid | Valid":               {"", ExactArgs(3), true, []string{"three", "one", "two"}},
-		"Exact     | Valid | Invalid":             {"invalid", ExactArgs(3), true, []string{"three", "a", "two"}},
-		"Exact     |       | InvalidCount":        {"notexact", ExactArgs(2), false, []string{"a", "b", "c"}},
-		"Exact     | Valid | InvalidCount":        {"notexact", ExactArgs(2), true, []string{"three", "one", "two"}},
-		"Exact     | Valid | InvalidCountInvalid": {"invalid", ExactArgs(2), true, []string{"three", "a", "two"}},
-		"Range     |       | Arb":                 {"", RangeArgs(2, 4), false, []string{"a", "b", "c"}},
-		"Range     | Valid | Valid":               {"", RangeArgs(2, 4), true, []string{"three", "one", "two"}},
-		"Range     | Valid | Invalid":             {"invalid", RangeArgs(2, 4), true, []string{"three", "a", "two"}},
-		"Range     |       | InvalidCount":        {"notinrange", RangeArgs(2, 4), false, []string{"a"}},
-		"Range     | Valid | InvalidCount":        {"notinrange", RangeArgs(2, 4), true, []string{"two"}},
-		"Range     | Valid | InvalidCountInvalid": {"invalid", RangeArgs(2, 4), true, []string{"a"}},
-		//DEPRECATED
-		"DEPRECATED OnlyValid  | Valid | Valid":        {"", OnlyValidArgs, true, []string{"one", "two"}},
-		"DEPRECATED OnlyValid  | Valid | Invalid":      {"invalid", OnlyValidArgs, true, []string{"a"}},
-		"DEPRECATED ExactValid | Valid | Valid":        {"", ExactValidArgs(3), true, []string{"two", "three", "one"}},
-		"DEPRECATED ExactValid | Valid | InvalidCount": {"notexact", ExactValidArgs(2), true, []string{"two", "three", "one"}},
-		"DEPRECATED ExactValid | Valid | Invalid":      {"invalid", ExactValidArgs(2), true, []string{"two", "a"}},
-	}
-
+func testArgs(t *testing.T, tests map[string]argsTestcase) {
 	for name, tc := range tests {
 		t.Run(name, tc.test)
 	}
+}
+
+func TestArgs_No(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"      | ":      {"", NoArgs, false, []string{}},
+		"      | Arb":   {"unknown", NoArgs, false, []string{"one"}},
+		"Valid | Valid": {"unknown", NoArgs, true, []string{"one"}},
+	})
+}
+func TestArgs_Arbitrary(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"      | Arb":     {"", ArbitraryArgs, false, []string{"a", "b"}},
+		"Valid | Valid":   {"", ArbitraryArgs, true, []string{"one", "two"}},
+		"Valid | Invalid": {"invalid", ArbitraryArgs, true, []string{"a"}},
+	})
+}
+func TestArgs_MinimumN(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"      | Arb":         {"", MinimumNArgs(2), false, []string{"a", "b", "c"}},
+		"Valid | Valid":       {"", MinimumNArgs(2), true, []string{"one", "three"}},
+		"Valid | Invalid":     {"invalid", MinimumNArgs(2), true, []string{"a", "b"}},
+		"      | Less":        {"less", MinimumNArgs(2), false, []string{"a"}},
+		"Valid | Less":        {"less", MinimumNArgs(2), true, []string{"one"}},
+		"Valid | LessInvalid": {"invalid", MinimumNArgs(2), true, []string{"a"}},
+	})
+}
+func TestArgs_MaximumN(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"      | Arb":         {"", MaximumNArgs(3), false, []string{"a", "b"}},
+		"Valid | Valid":       {"", MaximumNArgs(2), true, []string{"one", "three"}},
+		"Valid | Invalid":     {"invalid", MaximumNArgs(2), true, []string{"a", "b"}},
+		"      | More":        {"more", MaximumNArgs(2), false, []string{"a", "b", "c"}},
+		"Valid | More":        {"more", MaximumNArgs(2), true, []string{"one", "three", "two"}},
+		"Valid | MoreInvalid": {"invalid", MaximumNArgs(2), true, []string{"a", "b", "c"}},
+	})
+}
+func TestArgs_Exact(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"      | Arb":                 {"", ExactArgs(3), false, []string{"a", "b", "c"}},
+		"Valid | Valid":               {"", ExactArgs(3), true, []string{"three", "one", "two"}},
+		"Valid | Invalid":             {"invalid", ExactArgs(3), true, []string{"three", "a", "two"}},
+		"      | InvalidCount":        {"notexact", ExactArgs(2), false, []string{"a", "b", "c"}},
+		"Valid | InvalidCount":        {"notexact", ExactArgs(2), true, []string{"three", "one", "two"}},
+		"Valid | InvalidCountInvalid": {"invalid", ExactArgs(2), true, []string{"three", "a", "two"}},
+	})
+}
+func TestArgs_Range(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"      | Arb":                 {"", RangeArgs(2, 4), false, []string{"a", "b", "c"}},
+		"Valid | Valid":               {"", RangeArgs(2, 4), true, []string{"three", "one", "two"}},
+		"Valid | Invalid":             {"invalid", RangeArgs(2, 4), true, []string{"three", "a", "two"}},
+		"      | InvalidCount":        {"notinrange", RangeArgs(2, 4), false, []string{"a"}},
+		"Valid | InvalidCount":        {"notinrange", RangeArgs(2, 4), true, []string{"two"}},
+		"Valid | InvalidCountInvalid": {"invalid", RangeArgs(2, 4), true, []string{"a"}},
+	})
+}
+func TestArgs_DEPRECATED(t *testing.T) {
+	testArgs(t, map[string]argsTestcase{
+		"OnlyValid  | Valid | Valid":        {"", OnlyValidArgs, true, []string{"one", "two"}},
+		"OnlyValid  | Valid | Invalid":      {"invalid", OnlyValidArgs, true, []string{"a"}},
+		"ExactValid | Valid | Valid":        {"", ExactValidArgs(3), true, []string{"two", "three", "one"}},
+		"ExactValid | Valid | InvalidCount": {"notexact", ExactValidArgs(2), true, []string{"two", "three", "one"}},
+		"ExactValid | Valid | Invalid":      {"invalid", ExactValidArgs(2), true, []string{"two", "a"}},
+	})
 }
 
 // Takes(No)Args
