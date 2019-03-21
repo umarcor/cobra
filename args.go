@@ -6,6 +6,19 @@ import (
 
 type PositionalArgs func(cmd *Command, args []string) error
 
+// validateArgs returns an error if there are any positional args that are not in
+// the `ValidArgs` field of `Command`
+func validateArgs(cmd *Command, args []string) error {
+	if len(cmd.ValidArgs) > 0 {
+		for _, v := range args {
+			if !stringInSlice(v, cmd.ValidArgs) {
+				return fmt.Errorf("invalid argument %q for %q%s", v, cmd.CommandPath(), cmd.findSuggestions(args[0]))
+			}
+		}
+	}
+	return nil
+}
+
 // Legacy arg validation has the following behaviour:
 // - root commands with no subcommands can take arbitrary arguments
 // - root commands with subcommands will do subcommand validity checking

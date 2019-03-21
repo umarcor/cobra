@@ -408,12 +408,11 @@ Moreover, it is possible to set any custom validator that satisfies `func(cmd *c
 var cmd = &cobra.Command{
   Short: "hello",
   Args: func(cmd *cobra.Command, args []string) error {
-/*
     // Optionally run one of the validators provided by cobra
     if err := cobra.MinimumNArgs(1)(cmd args); err != nil {
         return err
     }
-*/
+    // Run the custom validation logic
     if myapp.IsValidColor(args[0]) {
       return nil
     }
