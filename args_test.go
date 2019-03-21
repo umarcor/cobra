@@ -265,85 +265,30 @@ func TestChildTakesArgs(t *testing.T) {
 
 // DEPRECATED
 
-func TestOnlyValidArgs(t *testing.T) {
-	c := &Command{
-		Use:       "c",
-		Args:      OnlyValidArgs,
-		ValidArgs: []string{"one", "two"},
-		Run:       emptyRun,
-	}
-
-	output, err := executeCommand(c, "one", "two")
-	if output != "" {
-		t.Errorf("Unexpected output: %v", output)
-	}
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
+func TestDEPRECATEDOnlyValidArgs(t *testing.T) {
+	o, e := executeCommand(newCommand(OnlyValidArgs, true), "one", "two")
+	expectSuccess(o, e, t)
 }
 
-func TestOnlyValidArgsWithInvalidArgs(t *testing.T) {
-	c := &Command{
-		Use:       "c",
-		Args:      OnlyValidArgs,
-		ValidArgs: []string{"one", "two"},
-		Run:       emptyRun,
-	}
-
-	_, err := executeCommand(c, "three")
-	if err == nil {
-		t.Fatal("Expected an error")
-	}
-
-	got := err.Error()
-	expected := `invalid argument "three" for "c"`
-	if got != expected {
-		t.Errorf("Expected: %q, got: %q", expected, got)
-	}
+func TestDEPRECATEDOnlyValidArgsWithInvalidArgs(t *testing.T) {
+	_, e := executeCommand(newCommand(OnlyValidArgs, true), "a")
+	expectError(e, t, "valid")
 }
 
-func TestExactValidArgs(t *testing.T) {
-	c := &Command{Use: "c", Args: ExactValidArgs(3), ValidArgs: []string{"a", "b", "c"}, Run: emptyRun}
-	output, err := executeCommand(c, "a", "b", "c")
-	if output != "" {
-		t.Errorf("Unexpected output: %v", output)
-	}
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
+func TestDEPRECATEDExactValidArgs(t *testing.T) {
+	// Note that the order is not required to be the same:
+	// Definition: "one", "two", "three"
+	// Execution: "two", "three", "one"
+	o, e := executeCommand(newCommand(ExactValidArgs(3), true), "two", "three", "one")
+	expectSuccess(o, e, t)
 }
 
-func TestExactValidArgsWithInvalidCount(t *testing.T) {
-	c := &Command{Use: "c", Args: ExactValidArgs(2), Run: emptyRun}
-	_, err := executeCommand(c, "a", "b", "c")
-
-	if err == nil {
-		t.Fatal("Expected an error")
-	}
-
-	got := err.Error()
-	expected := "accepts 2 arg(s), received 3"
-	if got != expected {
-		t.Fatalf("Expected %q, got %q", expected, got)
-	}
+func TestDEPRECATEDExactValidArgsWithInvalidCount(t *testing.T) {
+	_, e := executeCommand(newCommand(ExactValidArgs(2), true), "two", "three", "one")
+	expectError(e, t, "exact")
 }
 
-func TestExactValidArgsWithInvalidArgs(t *testing.T) {
-	c := &Command{
-		Use:       "c",
-		Args:      ExactValidArgs(1),
-		ValidArgs: []string{"one", "two"},
-		Run:       emptyRun,
-	}
-
-	_, err := executeCommand(c, "three")
-	if err == nil {
-		t.Fatal("Expected an error")
-	}
-
-	got := err.Error()
-	expected := `invalid argument "three" for "c"`
-	if got != expected {
-		t.Errorf("Expected: %q, got: %q", expected, got)
-	}
+func TestDEPRECATEDExactValidArgsWithInvalidArgs(t *testing.T) {
+	_, e := executeCommand(newCommand(ExactValidArgs(2), true), "two", "a")
+	expectError(e, t, "valid")
 }
