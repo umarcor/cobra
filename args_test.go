@@ -50,12 +50,12 @@ func TestNoArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestNoArgsWithArgs(t *testing.T) {
+func TestNoArgs_WithArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(NoArgs, false), "one")
 	expectError(e, t, "no")
 }
 
-func TestNoArgsWithArgsWithValid(t *testing.T) {
+func TestNoArgs_WithArgs_WithValid(t *testing.T) {
 	_, e := executeCommand(newCommand(NoArgs, true), "one")
 	expectError(e, t, "no")
 }
@@ -67,12 +67,12 @@ func TestArbitraryArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestArbitraryArgsWithValid(t *testing.T) {
+func TestArbitraryArgs_WithValid(t *testing.T) {
 	o, e := executeCommand(newCommand(ArbitraryArgs, true), "one", "two")
 	expectSuccess(o, e, t)
 }
 
-func TestArbitraryArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestArbitraryArgs_WithValid_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(ArbitraryArgs, true), "a")
 	expectError(e, t, "valid")
 }
@@ -84,27 +84,27 @@ func TestMinimumNArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestMinimumNArgsWithValid(t *testing.T) {
+func TestMinimumNArgs_WithValid(t *testing.T) {
 	o, e := executeCommand(newCommand(MinimumNArgs(2), true), "one", "three")
 	expectSuccess(o, e, t)
 }
 
-func TestMinimumNArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestMinimumNArgs_WithValid_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MinimumNArgs(2), true), "a", "b")
 	expectError(e, t, "valid")
 }
 
-func TestMinimumNArgsWithLessArgs(t *testing.T) {
+func TestMinimumNArgs_WithLessArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MinimumNArgs(2), false), "a")
 	expectError(e, t, "min")
 }
 
-func TestMinimumNArgsWithLessArgsWithValid(t *testing.T) {
+func TestMinimumNArgs_WithValid_WithLessArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MinimumNArgs(2), true), "one")
 	expectError(e, t, "min")
 }
 
-func TestMinimumNArgsWithLessArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestMinimumNArgs_WithValid_WithLessArgsWithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MinimumNArgs(2), true), "a")
 	expectError(e, t, "valid")
 }
@@ -116,27 +116,27 @@ func TestMaximumNArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestMaximumNArgsWithValid(t *testing.T) {
+func TestMaximumNArgs_WithValid(t *testing.T) {
 	o, e := executeCommand(newCommand(MaximumNArgs(2), true), "one", "three")
 	expectSuccess(o, e, t)
 }
 
-func TestMaximumNArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestMaximumNArgs_WithValid_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MaximumNArgs(2), true), "a", "b")
 	expectError(e, t, "valid")
 }
 
-func TestMaximumNArgsWithMoreArgs(t *testing.T) {
+func TestMaximumNArgs_WithMoreArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MaximumNArgs(2), false), "a", "b", "c")
 	expectError(e, t, "max")
 }
 
-func TestMaximumNArgsWithMoreArgsWithValid(t *testing.T) {
+func TestMaximumNArgs_WithValid_WithMoreArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MaximumNArgs(2), true), "one", "three", "two")
 	expectError(e, t, "max")
 }
 
-func TestMaximumNArgsWithMoreArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestMaximumNArgs_WithValid_WithMoreArgsWithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(MaximumNArgs(2), true), "a", "b", "c")
 	expectError(e, t, "valid")
 }
@@ -148,27 +148,27 @@ func TestExactArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestExactArgsWithValid(t *testing.T) {
+func TestExactArgs_WithValid(t *testing.T) {
 	o, e := executeCommand(newCommand(ExactArgs(3), true), "three", "one", "two")
 	expectSuccess(o, e, t)
 }
 
-func TestExactArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestExactArgs_WithValid_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(ExactArgs(3), true), "three", "a", "two")
 	expectError(e, t, "valid")
 }
 
-func TestExactArgsWithInvalidCount(t *testing.T) {
+func TestExactArgs_WithInvalidCount(t *testing.T) {
 	_, e := executeCommand(newCommand(ExactArgs(2), false), "a", "b", "c")
 	expectError(e, t, "exact")
 }
 
-func TestExactArgsWithInvalidCountWithValid(t *testing.T) {
+func TestExactArgs_WithValid_WithInvalidCount(t *testing.T) {
 	_, e := executeCommand(newCommand(ExactArgs(2), true), "three", "one", "two")
 	expectError(e, t, "exact")
 }
 
-func TestExactArgsWithInvalidCountWithValidWithInvalidArgs(t *testing.T) {
+func TestExactArgs_WithValid_WithInvalidCountWithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(ExactArgs(2), true), "three", "a", "two")
 	expectError(e, t, "valid")
 }
@@ -180,27 +180,27 @@ func TestRangeArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestRangeArgsWithValid(t *testing.T) {
+func TestRangeArgs_WithValid(t *testing.T) {
 	o, e := executeCommand(newCommand(RangeArgs(2, 4), true), "three", "one", "two")
 	expectSuccess(o, e, t)
 }
 
-func TestRangeArgsWithValidWithInvalidArgs(t *testing.T) {
+func TestRangeArgs_WithValid_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(RangeArgs(2, 4), true), "three", "a", "two")
 	expectError(e, t, "valid")
 }
 
-func TestRangeArgsWithInvalidCount(t *testing.T) {
+func TestRangeArgs_WithInvalidCount(t *testing.T) {
 	_, e := executeCommand(newCommand(RangeArgs(2, 4), false), "a")
 	expectError(e, t, "range")
 }
 
-func TestRangeArgsWithInvalidCountWithValid(t *testing.T) {
+func TestRangeArgs_WithValid_WithInvalidCount(t *testing.T) {
 	_, e := executeCommand(newCommand(RangeArgs(2, 4), true), "two")
 	expectError(e, t, "range")
 }
 
-func TestRangeArgsWithInvalidCountWithValidWithInvalidArgs(t *testing.T) {
+func TestRangeArgs_WithValid_WithInvalidCountWithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(RangeArgs(2, 4), true), "a")
 	expectError(e, t, "valid")
 }
@@ -265,17 +265,17 @@ func TestChildTakesArgs(t *testing.T) {
 
 // DEPRECATED
 
-func TestDEPRECATEDOnlyValidArgs(t *testing.T) {
+func TestDEPRECATED_OnlyValidArgs(t *testing.T) {
 	o, e := executeCommand(newCommand(OnlyValidArgs, true), "one", "two")
 	expectSuccess(o, e, t)
 }
 
-func TestDEPRECATEDOnlyValidArgsWithInvalidArgs(t *testing.T) {
+func TestDEPRECATED_OnlyValidArgs_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(OnlyValidArgs, true), "a")
 	expectError(e, t, "valid")
 }
 
-func TestDEPRECATEDExactValidArgs(t *testing.T) {
+func TestDEPRECATED_ExactValidArgs(t *testing.T) {
 	// Note that the order is not required to be the same:
 	// Definition: "one", "two", "three"
 	// Execution: "two", "three", "one"
@@ -283,12 +283,12 @@ func TestDEPRECATEDExactValidArgs(t *testing.T) {
 	expectSuccess(o, e, t)
 }
 
-func TestDEPRECATEDExactValidArgsWithInvalidCount(t *testing.T) {
+func TestDEPRECATED_ExactValidArgs_WithInvalidCount(t *testing.T) {
 	_, e := executeCommand(newCommand(ExactValidArgs(2), true), "two", "three", "one")
 	expectError(e, t, "exact")
 }
 
-func TestDEPRECATEDExactValidArgsWithInvalidArgs(t *testing.T) {
+func TestDEPRECATED_ExactValidArgs_WithInvalidArgs(t *testing.T) {
 	_, e := executeCommand(newCommand(ExactValidArgs(2), true), "two", "a")
 	expectError(e, t, "valid")
 }
