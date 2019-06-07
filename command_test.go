@@ -55,6 +55,8 @@ func checkStringOmits(t *testing.T, got, expected string) {
 	}
 }
 
+const onetwo = "one two"
+
 func TestSingleCommand(t *testing.T) {
 	var rootCmdArgs []string
 	rootCmd := &Command{
@@ -75,9 +77,8 @@ func TestSingleCommand(t *testing.T) {
 	}
 
 	got := strings.Join(rootCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("rootCmdArgs expected: %q, got: %q", expected, got)
+	if got != onetwo {
+		t.Errorf("rootCmdArgs expected: %q, got: %q", onetwo, got)
 	}
 }
 
@@ -101,9 +102,8 @@ func TestChildCommand(t *testing.T) {
 	}
 
 	got := strings.Join(child1CmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("child1CmdArgs expected: %q, got: %q", expected, got)
+	if got != onetwo {
+		t.Errorf("child1CmdArgs expected: %q, got: %q", onetwo, got)
 	}
 }
 
@@ -142,7 +142,7 @@ func TestSubcommandExecuteC(t *testing.T) {
 	}
 
 	if c.Name() != "child" {
-		t.Errorf(`invalid command returned from ExecuteC: expected "child"', got %q`, c.Name())
+		t.Errorf(`invalid command returned from ExecuteC: expected "child"', got: %q`, c.Name())
 	}
 }
 
@@ -240,9 +240,8 @@ func TestCommandAlias(t *testing.T) {
 	}
 
 	got := strings.Join(timesCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("timesCmdArgs expected: %v, got: %v", expected, got)
+	if got != onetwo {
+		t.Errorf("timesCmdArgs expected: %v, got: %v", onetwo, got)
 	}
 }
 
@@ -268,9 +267,8 @@ func TestEnablePrefixMatching(t *testing.T) {
 	}
 
 	got := strings.Join(aCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("aCmdArgs expected: %q, got: %q", expected, got)
+	if got != onetwo {
+		t.Errorf("aCmdArgs expected: %q, got: %q", onetwo, got)
 	}
 
 	EnablePrefixMatching = false
@@ -304,9 +302,8 @@ func TestAliasPrefixMatching(t *testing.T) {
 	}
 
 	got := strings.Join(timesCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("timesCmdArgs expected: %v, got: %v", expected, got)
+	if got != onetwo {
+		t.Errorf("timesCmdArgs expected: %v, got: %v", onetwo, got)
 	}
 
 	EnablePrefixMatching = false
@@ -335,9 +332,8 @@ func TestChildSameName(t *testing.T) {
 	}
 
 	got := strings.Join(fooCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("fooCmdArgs expected: %v, got: %v", expected, got)
+	if got != onetwo {
+		t.Errorf("fooCmdArgs expected: %v, got: %v", onetwo, got)
 	}
 }
 
@@ -365,9 +361,8 @@ func TestGrandChildSameName(t *testing.T) {
 	}
 
 	got := strings.Join(fooCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("fooCmdArgs expected: %v, got: %v", expected, got)
+	if got != onetwo {
+		t.Errorf("fooCmdArgs expected: %v, got: %v", onetwo, got)
 	}
 }
 
@@ -403,9 +398,8 @@ func TestFlagLong(t *testing.T) {
 	}
 
 	got := strings.Join(cArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("Expected arguments: %q, got %q", expected, got)
+	if got != onetwo {
+		t.Errorf("rootCmdArgs expected: %q, got: %q", onetwo, got)
 	}
 }
 
@@ -438,9 +432,8 @@ func TestFlagShort(t *testing.T) {
 	}
 
 	got := strings.Join(cArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("Expected arguments: %q, got %q", expected, got)
+	if got != onetwo {
+		t.Errorf("rootCmdArgs expected: %q, got: %q", onetwo, got)
 	}
 }
 
@@ -642,9 +635,8 @@ func TestPersistentFlagsOnSameCommand(t *testing.T) {
 	}
 
 	got := strings.Join(rootCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("rootCmdArgs expected: %q, got %q", expected, got)
+	if got != onetwo {
+		t.Errorf("rootCmdArgs expected: %q, got %q", onetwo, got)
 	}
 	if flagValue != 7 {
 		t.Errorf("flagValue expected: %v, got %v", 7, flagValue)
@@ -728,9 +720,8 @@ func TestPersistentFlagsOnChild(t *testing.T) {
 	}
 
 	got := strings.Join(childCmdArgs, " ")
-	expected := "one two"
-	if got != expected {
-		t.Errorf("childCmdArgs expected: %q, got %q", expected, got)
+	if got != onetwo {
+		t.Errorf("rootCmdArgs expected: %q, got: %q", onetwo, got)
 	}
 	if parentFlagValue != 8 {
 		t.Errorf("parentFlagValue expected: %v, got %v", 8, parentFlagValue)
@@ -743,9 +734,9 @@ func TestPersistentFlagsOnChild(t *testing.T) {
 func TestRequiredFlags(t *testing.T) {
 	c := &Command{Use: "c", Run: emptyRun}
 	c.Flags().String("foo1", "", "")
-	c.MarkFlagRequired("foo1")
+	er(c.MarkFlagRequired("foo1"))
 	c.Flags().String("foo2", "", "")
-	c.MarkFlagRequired("foo2")
+	er(c.MarkFlagRequired("foo2"))
 	c.Flags().String("bar", "", "")
 
 	expected := fmt.Sprintf("required flag(s) %q, %q not set", "foo1", "foo2")
@@ -761,16 +752,16 @@ func TestRequiredFlags(t *testing.T) {
 func TestPersistentRequiredFlags(t *testing.T) {
 	parent := &Command{Use: "parent", Run: emptyRun}
 	parent.PersistentFlags().String("foo1", "", "")
-	parent.MarkPersistentFlagRequired("foo1")
+	er(parent.MarkPersistentFlagRequired("foo1"))
 	parent.PersistentFlags().String("foo2", "", "")
-	parent.MarkPersistentFlagRequired("foo2")
+	er(parent.MarkPersistentFlagRequired("foo2"))
 	parent.Flags().String("foo3", "", "")
 
 	child := &Command{Use: "child", Run: emptyRun}
 	child.Flags().String("bar1", "", "")
-	child.MarkFlagRequired("bar1")
+	er(child.MarkFlagRequired("bar1"))
 	child.Flags().String("bar2", "", "")
-	child.MarkFlagRequired("bar2")
+	er(child.MarkFlagRequired("bar2"))
 	child.Flags().String("bar3", "", "")
 
 	parent.AddCommand(child)
@@ -1265,20 +1256,19 @@ func TestHooks(t *testing.T) {
 		t.Errorf("Unexpected error: %v", err)
 	}
 
-	if persPreArgs != "one two" {
-		t.Errorf("Expected persPreArgs %q, got %q", "one two", persPreArgs)
-	}
-	if preArgs != "one two" {
-		t.Errorf("Expected preArgs %q, got %q", "one two", preArgs)
-	}
-	if runArgs != "one two" {
-		t.Errorf("Expected runArgs %q, got %q", "one two", runArgs)
-	}
-	if postArgs != "one two" {
-		t.Errorf("Expected postArgs %q, got %q", "one two", postArgs)
-	}
-	if persPostArgs != "one two" {
-		t.Errorf("Expected persPostArgs %q, got %q", "one two", persPostArgs)
+	for _, v := range []struct {
+		name string
+		got  string
+	}{
+		{"persPreArgs", persPreArgs},
+		{"preArgs", preArgs},
+		{"runArgs", runArgs},
+		{"postArgs", postArgs},
+		{"persPostArgs", persPostArgs},
+	} {
+		if v.got != onetwo {
+			t.Errorf("Expected %s %q, got %q", v.name, onetwo, v.got)
+		}
 	}
 }
 
@@ -1346,44 +1336,42 @@ func TestPersistentHooks(t *testing.T) {
 		t.Errorf("Unexpected error: %v", err)
 	}
 
-	// TODO: currently PersistenPreRun* defined in parent does not
-	// run if the matchin child subcommand has PersistenPreRun.
-	// If the behavior changes (https://github.com/spf13/cobra/issues/252)
-	// this test must be fixed.
-	if parentPersPreArgs != "" {
-		t.Errorf("Expected blank parentPersPreArgs, got %q", parentPersPreArgs)
-	}
-	if parentPreArgs != "" {
-		t.Errorf("Expected blank parentPreArgs, got %q", parentPreArgs)
-	}
-	if parentRunArgs != "" {
-		t.Errorf("Expected blank parentRunArgs, got %q", parentRunArgs)
-	}
-	if parentPostArgs != "" {
-		t.Errorf("Expected blank parentPostArgs, got %q", parentPostArgs)
-	}
-	// TODO: currently PersistenPostRun* defined in parent does not
-	// run if the matchin child subcommand has PersistenPostRun.
-	// If the behavior changes (https://github.com/spf13/cobra/issues/252)
-	// this test must be fixed.
-	if parentPersPostArgs != "" {
-		t.Errorf("Expected blank parentPersPostArgs, got %q", parentPersPostArgs)
+	for _, v := range []struct {
+		name string
+		got  string
+	}{
+		// TODO: currently PersistenPreRun* defined in parent does not
+		// run if the matchin child subcommand has PersistenPreRun.
+		// If the behavior changes (https://github.com/spf13/cobra/issues/252)
+		// this test must be fixed.
+		{"parentPersPreArgs", parentPersPreArgs},
+		{"parentPreArgs", parentPreArgs},
+		{"parentRunArgs", parentRunArgs},
+		{"parentPostArgs", parentPostArgs},
+		// TODO: currently PersistenPostRun* defined in parent does not
+		// run if the matchin child subcommand has PersistenPostRun.
+		// If the behavior changes (https://github.com/spf13/cobra/issues/252)
+		// this test must be fixed.
+		{"parentPersPostArgs", parentPersPostArgs},
+	} {
+		if v.got != "" {
+			t.Errorf("Expected blank %s, got %q", v.name, v.got)
+		}
 	}
 
-	if childPersPreArgs != "one two" {
-		t.Errorf("Expected childPersPreArgs %q, got %q", "one two", childPersPreArgs)
-	}
-	if childPreArgs != "one two" {
-		t.Errorf("Expected childPreArgs %q, got %q", "one two", childPreArgs)
-	}
-	if childRunArgs != "one two" {
-		t.Errorf("Expected childRunArgs %q, got %q", "one two", childRunArgs)
-	}
-	if childPostArgs != "one two" {
-		t.Errorf("Expected childPostArgs %q, got %q", "one two", childPostArgs)
-	}
-	if childPersPostArgs != "one two" {
-		t.Errorf("Expected childPersPostArgs %q, got %q", "one two", childPersPostArgs)
+	for _, v := range []struct {
+		name string
+		got  string
+	}{
+		{"childPersPreArgs", childPersPreArgs},
+		{"childPreArgs", childPreArgs},
+		{"childRunArgs", childRunArgs},
+		{"childPostArgs", childPostArgs},
+		{"childPersPostArgs", childPersPostArgs},
+	} {
+		if v.got != onetwo {
+			t.Errorf("Expected %s %q, got %q", v.name, onetwo, v.got)
+		}
 	}
 }
 
@@ -1666,7 +1654,7 @@ func TestMergeCommandLineToFlags(t *testing.T) {
 func TestUseDeprecatedFlags(t *testing.T) {
 	c := &Command{Use: "c", Run: emptyRun}
 	c.Flags().BoolP("deprecated", "d", false, "deprecated flag")
-	c.Flags().MarkDeprecated("deprecated", "This flag is deprecated")
+	er(c.Flags().MarkDeprecated("deprecated", "This flag is deprecated"))
 
 	output, err := executeCommand(c, "c", "-d")
 	if err != nil {
@@ -1793,7 +1781,6 @@ type calledAsTestcase struct {
 	call string
 	want string
 	epm  bool
-	tc   bool
 }
 
 func (tc *calledAsTestcase) test(t *testing.T) {
@@ -1814,7 +1801,7 @@ func (tc *calledAsTestcase) test(t *testing.T) {
 	output := new(bytes.Buffer)
 	parent.SetOutput(output)
 
-	parent.Execute()
+	_ = parent.Execute()
 
 	if called == nil {
 		if tc.call != "" {
@@ -1832,18 +1819,18 @@ func (tc *calledAsTestcase) test(t *testing.T) {
 
 func TestCalledAs(t *testing.T) {
 	tests := map[string]calledAsTestcase{
-		"find/no-args":            {nil, "parent", "parent", false, false},
-		"find/real-name":          {[]string{"child1"}, "child1", "child1", false, false},
-		"find/full-alias":         {[]string{"that"}, "child2", "that", false, false},
-		"find/part-no-prefix":     {[]string{"thi"}, "", "", false, false},
-		"find/part-alias":         {[]string{"thi"}, "child1", "this", true, false},
-		"find/conflict":           {[]string{"th"}, "", "", true, false},
-		"traverse/no-args":        {nil, "parent", "parent", false, true},
-		"traverse/real-name":      {[]string{"child1"}, "child1", "child1", false, true},
-		"traverse/full-alias":     {[]string{"that"}, "child2", "that", false, true},
-		"traverse/part-no-prefix": {[]string{"thi"}, "", "", false, true},
-		"traverse/part-alias":     {[]string{"thi"}, "child1", "this", true, true},
-		"traverse/conflict":       {[]string{"th"}, "", "", true, true},
+		"find/no-args":            {nil, "parent", "parent", false},
+		"find/real-name":          {[]string{"child1"}, "child1", "child1", false},
+		"find/full-alias":         {[]string{"that"}, "child2", "that", false},
+		"find/part-no-prefix":     {[]string{"thi"}, "", "", false},
+		"find/part-alias":         {[]string{"thi"}, "child1", "this", true},
+		"find/conflict":           {[]string{"th"}, "", "", true},
+		"traverse/no-args":        {nil, "parent", "parent", false},
+		"traverse/real-name":      {[]string{"child1"}, "child1", "child1", false},
+		"traverse/full-alias":     {[]string{"that"}, "child2", "that", false},
+		"traverse/part-no-prefix": {[]string{"thi"}, "", "", false},
+		"traverse/part-alias":     {[]string{"thi"}, "child1", "this", true},
+		"traverse/conflict":       {[]string{"th"}, "", "", true},
 	}
 
 	for name, tc := range tests {

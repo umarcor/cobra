@@ -216,7 +216,6 @@ import (
 	"fmt"
 	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -267,7 +266,7 @@ func initConfig() {
 		viper.SetConfigFile(cfgFile)
 	} else {
 		// Find home directory.
-		home, err := homedir.Dir()
+		home, err := os.UserHomeDir()
 		if err != nil {
 			er(err)
 		}
@@ -276,7 +275,6 @@ func initConfig() {
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".cobra")
 	}
-
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err == nil {
