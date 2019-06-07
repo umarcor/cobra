@@ -49,7 +49,7 @@ and the appropriate structure for a Cobra-based CLI application.
 
 func init() {
 	initCmd.Flags().StringVar(&pkgName, "pkg-name", "", "fully qualified pkg name")
-	initCmd.MarkFlagRequired("pkg-name")
+	er(initCmd.MarkFlagRequired("pkg-name"))
 }
 
 func initializeProject(args []string) (string, error) {
