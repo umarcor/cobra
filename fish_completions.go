@@ -7,13 +7,13 @@ import (
 	"os"
 )
 
-func genFishComp(buf *bytes.Buffer, name string, includeDesc bool) {
+func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
 	compCmd := ShellCompRequestCmd
 	if !includeDesc {
 		compCmd = ShellCompNoDescRequestCmd
 	}
-	buf.WriteString(fmt.Sprintf("# fish completion for %-36s -*- shell-script -*-\n", name))
-	buf.WriteString(fmt.Sprintf(`
+	WrStringAndCheck(buf, fmt.Sprintf("# fish completion for %-36s -*- shell-script -*-\n", name))
+	WrStringAndCheck(buf, fmt.Sprintf(`
 function __%[1]s_debug
     set file "$BASH_COMP_DEBUG_FILE"
     if test -n "$file"

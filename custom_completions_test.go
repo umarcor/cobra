@@ -270,7 +270,7 @@ func TestValidArgsFuncInBashScript(t *testing.T) {
 	rootCmd.AddCommand(child)
 
 	buf := new(bytes.Buffer)
-	rootCmd.GenBashCompletion(buf)
+	er(rootCmd.GenBashCompletion(buf))
 	output := buf.String()
 
 	check(t, output, "has_completion_function=1")
@@ -285,7 +285,7 @@ func TestNoValidArgsFuncInBashScript(t *testing.T) {
 	rootCmd.AddCommand(child)
 
 	buf := new(bytes.Buffer)
-	rootCmd.GenBashCompletion(buf)
+	er(rootCmd.GenBashCompletion(buf))
 	output := buf.String()
 
 	checkOmit(t, output, "has_completion_function=1")
@@ -301,7 +301,7 @@ func TestCompleteCmdInBashScript(t *testing.T) {
 	rootCmd.AddCommand(child)
 
 	buf := new(bytes.Buffer)
-	rootCmd.GenBashCompletion(buf)
+	er(rootCmd.GenBashCompletion(buf))
 	output := buf.String()
 
 	check(t, output, ShellCompNoDescRequestCmd)
@@ -317,7 +317,7 @@ func TestCompleteNoDesCmdInFishScript(t *testing.T) {
 	rootCmd.AddCommand(child)
 
 	buf := new(bytes.Buffer)
-	rootCmd.GenFishCompletion(buf, false)
+	er(rootCmd.GenFishCompletion(buf, false))
 	output := buf.String()
 
 	check(t, output, ShellCompNoDescRequestCmd)
@@ -333,7 +333,7 @@ func TestCompleteCmdInFishScript(t *testing.T) {
 	rootCmd.AddCommand(child)
 
 	buf := new(bytes.Buffer)
-	rootCmd.GenFishCompletion(buf, true)
+	er(rootCmd.GenFishCompletion(buf, true))
 	output := buf.String()
 
 	check(t, output, ShellCompRequestCmd)
@@ -346,7 +346,7 @@ func TestFlagCompletionInGo(t *testing.T) {
 		Run: emptyRun,
 	}
 	rootCmd.Flags().IntP("introot", "i", -1, "help message for flag introot")
-	rootCmd.RegisterFlagCompletionFunc("introot", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
+	er(rootCmd.RegisterFlagCompletionFunc("introot", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
 		completions := []string{}
 		for _, comp := range []string{"1\tThe first", "2\tThe second", "10\tThe tenth"} {
 			if strings.HasPrefix(comp, toComplete) {
@@ -354,9 +354,9 @@ func TestFlagCompletionInGo(t *testing.T) {
 			}
 		}
 		return completions, ShellCompDirectiveDefault
-	})
+	}))
 	rootCmd.Flags().String("filename", "", "Enter a filename")
-	rootCmd.RegisterFlagCompletionFunc("filename", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
+	er(rootCmd.RegisterFlagCompletionFunc("filename", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
 		completions := []string{}
 		for _, comp := range []string{"file.yaml\tYAML format", "myfile.json\tJSON format", "file.xml\tXML format"} {
 			if strings.HasPrefix(comp, toComplete) {
@@ -364,7 +364,7 @@ func TestFlagCompletionInGo(t *testing.T) {
 			}
 		}
 		return completions, ShellCompDirectiveNoSpace | ShellCompDirectiveNoFileComp
-	})
+	}))
 
 	// Test completing an empty string
 	output, err := executeCommand(rootCmd, ShellCompNoDescRequestCmd, "--introot", "")
@@ -543,7 +543,7 @@ func TestFlagCompletionInGoWithDesc(t *testing.T) {
 		Run: emptyRun,
 	}
 	rootCmd.Flags().IntP("introot", "i", -1, "help message for flag introot")
-	rootCmd.RegisterFlagCompletionFunc("introot", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
+	er(rootCmd.RegisterFlagCompletionFunc("introot", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
 		completions := []string{}
 		for _, comp := range []string{"1\tThe first", "2\tThe second", "10\tThe tenth"} {
 			if strings.HasPrefix(comp, toComplete) {
@@ -551,9 +551,9 @@ func TestFlagCompletionInGoWithDesc(t *testing.T) {
 			}
 		}
 		return completions, ShellCompDirectiveDefault
-	})
+	}))
 	rootCmd.Flags().String("filename", "", "Enter a filename")
-	rootCmd.RegisterFlagCompletionFunc("filename", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
+	er(rootCmd.RegisterFlagCompletionFunc("filename", func(cmd *Command, args []string, toComplete string) ([]string, ShellCompDirective) {
 		completions := []string{}
 		for _, comp := range []string{"file.yaml\tYAML format", "myfile.json\tJSON format", "file.xml\tXML format"} {
 			if strings.HasPrefix(comp, toComplete) {
@@ -561,7 +561,7 @@ func TestFlagCompletionInGoWithDesc(t *testing.T) {
 			}
 		}
 		return completions, ShellCompDirectiveNoSpace | ShellCompDirectiveNoFileComp
-	})
+	}))
 
 	// Test completing an empty string
 	output, err := executeCommand(rootCmd, ShellCompRequestCmd, "--introot", "")
