@@ -33,7 +33,11 @@ tags
 
 *.exe
 cobra
+!cobra/
 cobra.test
 
 .idea/
 *.iml
+
+# test-generated files
+cobra/cmd/testproject

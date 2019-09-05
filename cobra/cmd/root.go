@@ -15,8 +15,8 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 	"github.com/umarcor/cobra"
 )
@@ -47,8 +47,8 @@ func init() {
 	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
 	rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "name of license for the project")
 	rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
-	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
+	er(viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author")))
+	er(viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper")))
 	viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
 	viper.SetDefault("license", "apache")
 
@@ -62,7 +62,7 @@ func initConfig() {
 		viper.SetConfigFile(cfgFile)
 	} else {
 		// Find home directory.
-		home, err := homedir.Dir()
+		home, err := os.UserHomeDir()
 		if err != nil {
 			er(err)
 		}

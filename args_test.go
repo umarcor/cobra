@@ -38,8 +38,8 @@ func checkOutput(o string, t *testing.T, i string) {
 	}
 }
 
-func expectErrorAndCheckOutput(t *testing.T, err error, err_k, o, i string) {
-	//	expectError(err, t, err_k)
+func expectErrorAndCheckOutput(t *testing.T, err error, errK, o, i string) {
+	//	expectError(err, t, errK)
 	//	checkOutput(o, t, i)
 }
 
@@ -238,19 +238,21 @@ func TestChildTakesArgs(t *testing.T) {
 	}
 }
 
+/*
 // NOTE 'c [command]' is not shown because this command does not have any subcommand
 // NOTE 'Valid Args:' is not shown because this command is not runnable
 // NOTE 'c [flags]' is not shown because this command is not runnable
-func noRunChecks(t *testing.T, err error, err_k, o string) {
-	expectErrorAndCheckOutput(t, err, err_k, o, "u")
+func noRunChecks(t *testing.T, err error, errK, o string) {
+	expectErrorAndCheckOutput(t, err, errK, o, "u")
 }
+*/
 
 // NoRun (no children)
 
 func TestArgs_NoRun(t *testing.T) {
 	tc := argsTestcase{"run", nil, false, false, []string{}}
 	t.Run("|", tc.test)
-	//	noRunChecks(t, e, "run", o)
+	//noRunChecks(t, e, "run", o)
 }
 
 func TestArgs_NoRun_ArbValid(t *testing.T) {
