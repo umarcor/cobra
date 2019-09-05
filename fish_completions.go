@@ -20,12 +20,12 @@ func (c *Command) GenFishCompletion(w io.Writer) error {
 	return err
 }
 
-func writeFishPreamble(cmd *Command, buf *bytes.Buffer) {
+func writeFishPreamble(cmd *Command, buf io.StringWriter) {
 	subCommandNames := []string{}
 	rangeCommands(cmd, func(subCmd *Command) {
 		subCommandNames = append(subCommandNames, subCmd.Name())
 	})
-	buf.WriteString(fmt.Sprintf(`
+	WrStringAndCheck(buf, fmt.Sprintf(`
 function __fish_%s_no_subcommand --description 'Test if %s has yet to be given the subcommand'
 	for i in (commandline -opc)
 		if contains -- $i %s
@@ -65,17 +65,24 @@ end
 `, cmd.Name(), cmd.Name(), strings.Join(subCommandNames, " "), cmd.Name()))
 }
 
-func writeFishCommandCompletion(rootCmd, cmd *Command, buf *bytes.Buffer) {
+func writeFishCommandCompletion(rootCmd, cmd *Command, buf io.StringWriter) {
 	rangeCommands(cmd, func(subCmd *Command) {
 		condition := commandCompletionCondition(rootCmd, cmd)
 		escapedDescription := strings.Replace(subCmd.Short, "'", "\\'", -1)
-		buf.WriteString(fmt.Sprintf("complete -c %s -f %s -a %s -d '%s'\n", rootCmd.Name(), condition, subCmd.Name(), escapedDescription))
+		WrStringAndCheck(buf, fmt.Sprintf("complete -c %s -f %s -a %s -d '%s'\n", rootCmd.Name(), condition, subCmd.Name(), escapedDescription))
 	})
 	for _, validArg := range append(cmd.ValidArgs, cmd.ArgAliases...) {
 		condition := commandCompletionCondition(rootCmd, cmd)
-		buf.WriteString(
-			fmt.Sprintf("complete -c %s -f %s -a %s -d '%s'\n",
-				rootCmd.Name(), condition, validArg, fmt.Sprintf("Positional Argument to %s", cmd.Name())))
+		WrStringAndCheck(
+			buf,
+			fmt.Sprintf(
+				"complete -c %s -f %s -a %s -d '%s'\n",
+				rootCmd.Name(),
+				condition,
+				validArg,
+				fmt.Sprintf("Positional Argument to %s", cmd.Name()),
+			),
+		)
 	}
 	writeCommandFlagsCompletion(rootCmd, cmd, buf)
 	rangeCommands(cmd, func(subCmd *Command) {
@@ -83,7 +90,7 @@ func writeFishCommandCompletion(rootCmd, cmd *Command, buf *bytes.Buffer) {
 	})
 }
 
-func writeCommandFlagsCompletion(rootCmd, cmd *Command, buf *bytes.Buffer) {
+func writeCommandFlagsCompletion(rootCmd, cmd *Command, buf io.StringWriter) {
 	cmd.NonInheritedFlags().VisitAll(func(flag *pflag.Flag) {
 		if nonCompletableFlag(flag) {
 			return
@@ -98,14 +105,14 @@ func writeCommandFlagsCompletion(rootCmd, cmd *Command, buf *bytes.Buffer) {
 	})
 }
 
-func writeCommandFlagCompletion(rootCmd, cmd *Command, buf *bytes.Buffer, flag *pflag.Flag) {
+func writeCommandFlagCompletion(rootCmd, cmd *Command, buf io.StringWriter, flag *pflag.Flag) {
 	shortHandPortion := ""
 	if len(flag.Shorthand) > 0 {
 		shortHandPortion = fmt.Sprintf("-s %s", flag.Shorthand)
 	}
 	condition := completionCondition(rootCmd, cmd)
 	escapedUsage := strings.Replace(flag.Usage, "'", "\\'", -1)
-	buf.WriteString(fmt.Sprintf("complete -c %s -f %s %s %s -l %s -d '%s'\n",
+	WrStringAndCheck(buf, fmt.Sprintf("complete -c %s -f %s %s %s -l %s -d '%s'\n",
 		rootCmd.Name(), condition, flagRequiresArgumentCompletion(flag), shortHandPortion, flag.Name, escapedUsage))
 }
 

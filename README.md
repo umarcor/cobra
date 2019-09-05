@@ -87,20 +87,12 @@ Cobra is built on a structure of commands, arguments & flags.
 The best applications will read like sentences when used. Users will know how
 to use the application because they will natively understand how to use it.
 
-The pattern to follow is
-`APPNAME VERB NOUN --ADJECTIVE.`
-    or
-`APPNAME COMMAND ARG --FLAG`
+The pattern to follow is `APPNAME VERB NOUN --ADJECTIVE` or `APPNAME COMMAND ARG --FLAG`.
 
 A few good real world examples may better illustrate this point.
 
-In the following example, 'server' is a command, and 'port' is a flag:
-
-    hugo server --port=1313
-
-In this command we are telling Git to clone the url bare.
-
-    git clone URL --bare
+In example `hugo server --port=1313`, 'server' is a command, and 'port' is a flag.
+In `git clone URL --bare`, we are telling Git to clone the url bare.
 
 ## Commands
 
@@ -215,7 +207,6 @@ package cmd
 import (
 	"fmt"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -256,12 +247,13 @@ func init() {
 }
 
 func initConfig() {
+	// Don't forget to read config either from cfgFile or from home directory!
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
 		// Find home directory.
-		home, err := homedir.Dir()
+		home, err := os.UserHomeDir()
 		if err != nil {
 			er(err)
 		}
@@ -290,11 +282,11 @@ In a Cobra app, typically the main.go file is very bare. It serves, one purpose,
 package main
 
 import (
-  "{pathToYourApp}/cmd"
+	"{pathToYourApp}/cmd"
 )
 
 func main() {
-  cmd.Execute()
+	cmd.Execute()
 }
 ```
 
@@ -310,22 +302,22 @@ populate it with the following:
 package cmd
 
 import (
-  "fmt"
+	"fmt"
 
-  "github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
 func init() {
-  rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(versionCmd)
 }
 
 var versionCmd = &cobra.Command{
-  Use:   "version",
-  Short: "Print the version number of Hugo",
-  Long:  `All software has versions. This is Hugo's`,
-  Run: func(cmd *cobra.Command, args []string) {
-    fmt.Println("Hugo Static Site Generator v0.9 -- HEAD")
-  },
+	Use:   "version",
+	Short: "Print the version number of Hugo",
+	Long:  `All software has versions. This is Hugo's`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Hugo Static Site Generator v0.9 -- HEAD")
+	},
 }
 ```
 
@@ -372,8 +364,8 @@ parse local flags on each command before executing the target command.
 
 ```go
 command := cobra.Command{
-  Use: "print [OPTIONS] [COMMANDS]",
-  TraverseChildren: true,
+	Use: "print [OPTIONS] [COMMANDS]",
+	TraverseChildren: true,
 }
 ```
 
@@ -384,8 +376,8 @@ You can also bind your flags with [viper](https://github.com/spf13/viper):
 var author string
 
 func init() {
-  rootCmd.PersistentFlags().StringVar(&author, "author", "YOUR NAME", "Author name for copyright attribution")
-  viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
+	rootCmd.PersistentFlags().StringVar(&author, "author", "YOUR NAME", "Author name for copyright attribution")
+	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
 }
 ```
 
@@ -427,21 +419,21 @@ Moreover, it is possible to set any custom validator that satisfies `func(cmd *c
 
 ```go
 var cmd = &cobra.Command{
-  Short: "hello",
-  Args: func(cmd *cobra.Command, args []string) error {
-    // Optionally run one of the validators provided by cobra
-    if err := cobra.MinimumNArgs(1)(cmd args); err != nil {
-        return err
-    }
-    // Run the custom validation logic
-    if myapp.IsValidColor(args[0]) {
-      return nil
-    }
-    return fmt.Errorf("invalid color specified: %s", args[0])
-  },
-  Run: func(cmd *cobra.Command, args []string) {
-    fmt.Println("Hello, World!")
-  },
+	Short: "hello",
+	Args: func(cmd *cobra.Command, args []string) error {
+		// Optionally run one of the validators provided by cobra
+		if err := cobra.MinimumNArgs(1)(cmd args); err != nil {
+			return err
+		}
+		// Run the custom validation logic
+		if myapp.IsValidColor(args[0]) {
+			return nil
+		}
+		return fmt.Errorf("invalid color specified: %s", args[0])
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Hello, World!")
+	},
 }
 ```
 
@@ -460,56 +452,56 @@ More documentation about flags is available at https://github.com/spf13/pflag
 package main
 
 import (
-  "fmt"
-  "strings"
+	"fmt"
+	"strings"
 
-  "github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
 func main() {
-  var echoTimes int
+	var echoTimes int
 
-  var cmdPrint = &cobra.Command{
-    Use:   "print [string to print]",
-    Short: "Print anything to the screen",
-    Long: `print is for printing anything back to the screen.
+	var cmdPrint = &cobra.Command{
+		Use:   "print [string to print]",
+		Short: "Print anything to the screen",
+		Long: `print is for printing anything back to the screen.
 For many years people have printed back to the screen.`,
-    Args: cobra.MinimumNArgs(1),
-    Run: func(cmd *cobra.Command, args []string) {
-      fmt.Println("Print: " + strings.Join(args, " "))
-    },
-  }
+		Args: cobra.MinimumNArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("Print: " + strings.Join(args, " "))
+		},
+	}
 
-  var cmdEcho = &cobra.Command{
-    Use:   "echo [string to echo]",
-    Short: "Echo anything to the screen",
-    Long: `echo is for echoing anything back.
+	var cmdEcho = &cobra.Command{
+		Use:   "echo [string to echo]",
+		Short: "Echo anything to the screen",
+		Long: `echo is for echoing anything back.
 Echo works a lot like print, except it has a child command.`,
-    Args: cobra.MinimumNArgs(1),
-    Run: func(cmd *cobra.Command, args []string) {
-      fmt.Println("Echo: " + strings.Join(args, " "))
-    },
-  }
+		Args: cobra.MinimumNArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("Echo: " + strings.Join(args, " "))
+		},
+	}
 
-  var cmdTimes = &cobra.Command{
-    Use:   "times [string to echo]",
-    Short: "Echo anything to the screen more times",
-    Long: `echo things multiple times back to the user by providing
+	var cmdTimes = &cobra.Command{
+		Use:   "times [string to echo]",
+		Short: "Echo anything to the screen more times",
+		Long: `echo things multiple times back to the user by providing
 a count and a string.`,
-    Args: cobra.MinimumNArgs(1),
-    Run: func(cmd *cobra.Command, args []string) {
-      for i := 0; i < echoTimes; i++ {
-        fmt.Println("Echo: " + strings.Join(args, " "))
-      }
-    },
-  }
+		Args: cobra.MinimumNArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			for i := 0; i < echoTimes; i++ {
+				fmt.Println("Echo: " + strings.Join(args, " "))
+			}
+		},
+	}
 
-  cmdTimes.Flags().IntVarP(&echoTimes, "times", "t", 1, "times to echo the input")
+	cmdTimes.Flags().IntVarP(&echoTimes, "times", "t", 1, "times to echo the input")
 
-  var rootCmd = &cobra.Command{Use: "app"}
-  rootCmd.AddCommand(cmdPrint, cmdEcho)
-  cmdEcho.AddCommand(cmdTimes)
-  rootCmd.Execute()
+	var rootCmd = &cobra.Command{Use: "app"}
+	rootCmd.AddCommand(cmdPrint, cmdEcho)
+	cmdEcho.AddCommand(cmdTimes)
+	rootCmd.Execute()
 }
 ```
 
@@ -521,7 +513,7 @@ Cobra automatically adds a help command to your application when you have subcom
 This will be called when a user runs 'app help'. Additionally, help will also
 support all other commands as input. Say, for instance, you have a command called
 'create' without any additional configuration; Cobra will work when 'app help
-create' is called.  Every command will automatically have the '--help' flag added.
+create' is called. Every command will automatically have the '--help' flag added.
 
 ### Example
 
@@ -628,57 +620,57 @@ An example of two commands which use all of these features is below.  When the s
 package main
 
 import (
-  "fmt"
+	"fmt"
 
-  "github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
 func main() {
 
-  var rootCmd = &cobra.Command{
-    Use:   "root [sub]",
-    Short: "My root command",
-    PersistentPreRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside rootCmd PersistentPreRun with args: %v\n", args)
-    },
-    PreRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside rootCmd PreRun with args: %v\n", args)
-    },
-    Run: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside rootCmd Run with args: %v\n", args)
-    },
-    PostRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside rootCmd PostRun with args: %v\n", args)
-    },
-    PersistentPostRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside rootCmd PersistentPostRun with args: %v\n", args)
-    },
-  }
+	var rootCmd = &cobra.Command{
+		Use:   "root [sub]",
+		Short: "My root command",
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside rootCmd PersistentPreRun with args: %v\n", args)
+		},
+		PreRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside rootCmd PreRun with args: %v\n", args)
+		},
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside rootCmd Run with args: %v\n", args)
+		},
+		PostRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside rootCmd PostRun with args: %v\n", args)
+		},
+		PersistentPostRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside rootCmd PersistentPostRun with args: %v\n", args)
+		},
+	}
 
-  var subCmd = &cobra.Command{
-    Use:   "sub [no options!]",
-    Short: "My subcommand",
-    PreRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside subCmd PreRun with args: %v\n", args)
-    },
-    Run: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside subCmd Run with args: %v\n", args)
-    },
-    PostRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside subCmd PostRun with args: %v\n", args)
-    },
-    PersistentPostRun: func(cmd *cobra.Command, args []string) {
-      fmt.Printf("Inside subCmd PersistentPostRun with args: %v\n", args)
-    },
-  }
+	var subCmd = &cobra.Command{
+		Use:   "sub [no options!]",
+		Short: "My subcommand",
+		PreRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside subCmd PreRun with args: %v\n", args)
+		},
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside subCmd Run with args: %v\n", args)
+		},
+		PostRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside subCmd PostRun with args: %v\n", args)
+		},
+		PersistentPostRun: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Inside subCmd PersistentPostRun with args: %v\n", args)
+		},
+	}
 
-  rootCmd.AddCommand(subCmd)
+	rootCmd.AddCommand(subCmd)
 
-  rootCmd.SetArgs([]string{""})
-  rootCmd.Execute()
-  fmt.Println()
-  rootCmd.SetArgs([]string{"sub", "arg1", "arg2"})
-  rootCmd.Execute()
+	rootCmd.SetArgs([]string{""})
+	rootCmd.Execute()
+	fmt.Println()
+	rootCmd.SetArgs([]string{"sub", "arg1", "arg2"})
+	rootCmd.Execute()
 }
 ```
 
