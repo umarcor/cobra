@@ -13,22 +13,22 @@ func TestFishCompletions(t *testing.T) {
 		Run:        emptyRun,
 	}
 	rootCmd.Flags().IntP("introot", "i", -1, "help's message for flag introot")
-	rootCmd.MarkFlagRequired("introot")
+	er(rootCmd.MarkFlagRequired("introot"))
 
 	// Filename.
 	rootCmd.Flags().String("filename", "", "Enter a filename")
-	rootCmd.MarkFlagFilename("filename", "json", "yaml", "yml")
+	er(rootCmd.MarkFlagFilename("filename", "json", "yaml", "yml"))
 
 	// Persistent filename.
 	rootCmd.PersistentFlags().String("persistent-filename", "", "Enter a filename")
-	rootCmd.MarkPersistentFlagFilename("persistent-filename")
-	rootCmd.MarkPersistentFlagRequired("persistent-filename")
+	er(rootCmd.MarkPersistentFlagFilename("persistent-filename"))
+	er(rootCmd.MarkPersistentFlagRequired("persistent-filename"))
 
 	// Filename extensions.
 	rootCmd.Flags().String("filename-ext", "", "Enter a filename (extension limited)")
-	rootCmd.MarkFlagFilename("filename-ext")
+	er(rootCmd.MarkFlagFilename("filename-ext"))
 	rootCmd.Flags().String("custom", "", "Enter a filename (extension limited)")
-	rootCmd.MarkFlagCustom("custom", "__complete_custom")
+	er(rootCmd.MarkFlagCustom("custom", "__complete_custom"))
 
 	// Subdirectories in a given directory.
 	rootCmd.Flags().String("theme", "", "theme to use (located in /themes/THEMENAME/)")
@@ -43,7 +43,7 @@ func TestFishCompletions(t *testing.T) {
 	}
 
 	echoCmd.Flags().String("filename", "", "Enter a filename")
-	echoCmd.MarkFlagFilename("filename", "json", "yaml", "yml")
+	er(echoCmd.MarkFlagFilename("filename", "json", "yaml", "yml"))
 	echoCmd.Flags().String("config", "", "config to use (located in /config/PROFILE/)")
 
 	printCmd := &Command{
@@ -82,7 +82,7 @@ func TestFishCompletions(t *testing.T) {
 	rootCmd.AddCommand(echoCmd, printCmd, deprecatedCmd, colonCmd)
 
 	buf := new(bytes.Buffer)
-	rootCmd.GenFishCompletion(buf)
+	er(rootCmd.GenFishCompletion(buf))
 	output := buf.String()
 
 	// check for preamble helper functions
