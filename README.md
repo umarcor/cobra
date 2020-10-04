@@ -21,4 +21,4 @@ Cobra is both a library for creating powerful modern CLI applications as well as
 
 Cobra is used in many Go projects such as [Kubernetes](http://kubernetes.io/),
 [Hugo](https://gohugo.io), and [Github CLI](https://github.com/cli/cli) to
-name a few. [This list](./projects_using_cobra.md) contains a more extensive list of projects using Cobra.
+name a few. [This list](./site/content/projects_using_cobra.md) contains a more extensive list of projects using Cobra.
