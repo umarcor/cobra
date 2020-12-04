@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/concepts/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/installing/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/getting_started/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/completions/shell/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/completions/bash/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/completions/fish/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/completions/powershell/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/completions/zsh/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/docgen/docgen/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/docgen/man_docs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/docgen/md_docs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/docgen/rest_docs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/docgen/yaml_docs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/contributing/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/changelog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/projects_using_cobra/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/license/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/completions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://spf13.github.io/cobra/docgen/</loc>
+  </url>
+  
+</urlset>

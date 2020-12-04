@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cobra documentation</title>
+    <link>https://spf13.github.io/cobra/</link>
+    <description>Recent content on Cobra documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://spf13.github.io/cobra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/overview/</guid>
+      <description>Overview Cobra is a library providing a simple interface to create powerful modern CLI interfaces similar to git &amp;amp; go tools.
+Cobra is also an application that will generate your application scaffolding to rapidly develop a Cobra-based application.
+Cobra provides:
+ Easy subcommand-based CLIs: app server, app fetch, etc. Fully POSIX-compliant flags (including short &amp;amp; long versions) Nested subcommands Global, local and cascading flags Easy generation of applications &amp;amp; commands with cobra init appname &amp;amp; cobra add cmdname Intelligent suggestions (app srver&amp;hellip; did you mean app server?</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/concepts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/concepts/</guid>
+      <description>Concepts Cobra is built on a structure of commands, arguments &amp;amp; flags.
+Commands represent actions, Args are things and Flags are modifiers for those actions.
+The best applications read like sentences when used, and as a result, users intuitively know how to interact with them.
+The pattern to follow is APPNAME VERB NOUN --ADJECTIVE. or APPNAME COMMAND ARG --FLAG
+A few good real world examples may better illustrate this point.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/installing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/installing/</guid>
+      <description>Installing Using Cobra is easy. First, use go get to install the latest version of the library. This command will install the cobra generator executable along with the library and its dependencies:
+go get -u github.com/spf13/cobra  Next, include Cobra in your application:
+import &amp;#34;github.com/spf13/cobra&amp;#34; </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/getting_started/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/getting_started/</guid>
+      <description>Getting Started While you are welcome to provide your own organization, typically a Cobra-based application will follow the following organizational structure:
+ ▾ appName/ ▾ cmd/ add.go your.go commands.go here.go main.go In a Cobra app, typically the main.go file is very bare. It serves one purpose: to initialize Cobra.
+package main import ( &amp;#34;{pathToYourApp}/cmd&amp;#34; ) func main() { cmd.Execute() } Using the Cobra Generator Cobra provides its own program that will create your application and add any commands you want.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/completions/shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/completions/shell/</guid>
+      <description>Shell completions Cobra can generate shell completions for multiple shells. The currently supported shells are:
+ Bash Zsh Fish PowerShell  If you are using the generator you can create a completion command by running
+cobra add completion and then modifying the generated cmd/completion.go file to look something like this (writing the shell script to stdout allows the most flexible use):
+var completionCmd = &amp;amp;cobra.Command{ Use: &amp;#34;completion [bash|zsh|fish|powershell]&amp;#34;, Short: &amp;#34;Generate completion script&amp;#34;, Long: `To load completions: Bash: $ source &amp;lt;(yourprogram completion bash) # To load completions for each session, execute once: Linux: $ yourprogram completion bash &amp;gt; /etc/bash_completion.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/completions/bash/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/completions/bash/</guid>
+      <description>Bash completions Please refer to Shell Completions for details.
+Bash legacy dynamic completions For backwards-compatibility, Cobra still supports its legacy dynamic completion solution (described below). Unlike the ValidArgsFunction solution, the legacy solution will only work for Bash shell-completion and not for other shells. This legacy solution can be used along-side ValidArgsFunction and RegisterFlagCompletionFunc(), as long as both solutions are not used for the same command. This provides a path to gradually migrate from the legacy solution to the new solution.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/completions/fish/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/completions/fish/</guid>
+      <description>Fish completions Please refer to Shell Completions for details.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/completions/powershell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/completions/powershell/</guid>
+      <description>PowerShell completions Cobra can generate PowerShell completion scripts. Users need PowerShell version 5.0 or above, which comes with Windows 10 and can be downloaded separately for Windows 7 or 8.1. They can then write the completions to a file and source this file from their PowerShell profile, which is referenced by the $Profile environment variable. See Get-Help about_Profiles for more info about PowerShell profiles.
+Note: PowerShell completions have not (yet?) been aligned to Cobra&#39;s generic shell completion support.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/completions/zsh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/completions/zsh/</guid>
+      <description>Zsh completions Please refer to Shell Completions for details.
+Zsh completions standardization Cobra 1.1 standardized its zsh completion support to align it with its other shell completions. Although the API was kept backwards-compatible, some small changes in behavior were introduced.
+Deprecation summary See further below for more details on these deprecations.
+ cmd.MarkZshCompPositionalArgumentFile(pos, []string{}) is no longer needed. It is therefore deprecated and silently ignored. cmd.MarkZshCompPositionalArgumentFile(pos, glob[]) is deprecated and silently ignored.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/docgen/docgen/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/docgen/docgen/</guid>
+      <description>Documentation generation Options  DisableAutoGenTag. You may set cmd.DisableAutoGenTag = true to entirely remove the auto generated string &amp;ldquo;Auto generated by spf13/cobra&amp;hellip;&amp;rdquo; from any documentation source.  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/docgen/man_docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/docgen/man_docs/</guid>
+      <description>Man Pages Generating man pages from a cobra command is incredibly easy. An example is as follows:
+package main import ( &amp;#34;log&amp;#34; &amp;#34;github.com/spf13/cobra&amp;#34; &amp;#34;github.com/spf13/cobra/doc&amp;#34; ) func main() { cmd := &amp;amp;cobra.Command{ Use: &amp;#34;test&amp;#34;, Short: &amp;#34;my test program&amp;#34;, } header := &amp;amp;doc.GenManHeader{ Title: &amp;#34;MINE&amp;#34;, Section: &amp;#34;3&amp;#34;, } err := doc.GenManTree(cmd, header, &amp;#34;/tmp&amp;#34;) if err != nil { log.Fatal(err) } } That will get you a man page /tmp/test.3</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/docgen/md_docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/docgen/md_docs/</guid>
+      <description>Markdown Docs Generating Markdown pages from a cobra command is incredibly easy. An example is as follows:
+package main import ( &amp;#34;log&amp;#34; &amp;#34;github.com/spf13/cobra&amp;#34; &amp;#34;github.com/spf13/cobra/doc&amp;#34; ) func main() { cmd := &amp;amp;cobra.Command{ Use: &amp;#34;test&amp;#34;, Short: &amp;#34;my test program&amp;#34;, } err := doc.GenMarkdownTree(cmd, &amp;#34;/tmp&amp;#34;) if err != nil { log.Fatal(err) } } That will get you a Markdown document /tmp/test.md
+The entire command tree This program can actually generate docs for the kubectl command in the kubernetes project</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/docgen/rest_docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/docgen/rest_docs/</guid>
+      <description>ReStructured Text Docs Generating ReST pages from a cobra command is incredibly easy. An example is as follows:
+package main import ( &amp;#34;log&amp;#34; &amp;#34;github.com/spf13/cobra&amp;#34; &amp;#34;github.com/spf13/cobra/doc&amp;#34; ) func main() { cmd := &amp;amp;cobra.Command{ Use: &amp;#34;test&amp;#34;, Short: &amp;#34;my test program&amp;#34;, } err := doc.GenReSTTree(cmd, &amp;#34;/tmp&amp;#34;) if err != nil { log.Fatal(err) } } That will get you a ReST document /tmp/test.rst
+The entire command tree This program can actually generate docs for the kubectl command in the kubernetes project</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/docgen/yaml_docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/docgen/yaml_docs/</guid>
+      <description>Yaml Docs Generating yaml files from a cobra command is incredibly easy. An example is as follows:
+package main import ( &amp;#34;log&amp;#34; &amp;#34;github.com/spf13/cobra&amp;#34; &amp;#34;github.com/spf13/cobra/doc&amp;#34; ) func main() { cmd := &amp;amp;cobra.Command{ Use: &amp;#34;test&amp;#34;, Short: &amp;#34;my test program&amp;#34;, } err := doc.GenYamlTree(cmd, &amp;#34;/tmp&amp;#34;) if err != nil { log.Fatal(err) } } That will get you a Yaml document /tmp/test.yaml
+The entire command tree This program can actually generate docs for the kubectl command in the kubernetes project</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/contributing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/contributing/</guid>
+      <description>Contributing to Cobra Thank you so much for contributing to Cobra. We appreciate your time and help. Here are some guidelines to help you get started.
+Code of Conduct Be kind and respectful to the members of the community. Take time to educate others who are seeking help. Harassment of any kind will not be tolerated.
+Questions If you have questions regarding Cobra, feel free to ask it in the community #cobra Slack channel</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/changelog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/changelog/</guid>
+      <description>Cobra Changelog Pending  Fix man page doc generation - no auto generated tag when cmd.DisableAutoGenTag = true @jpmcb  v1.0.0 Announcing v1.0.0 of Cobra. 🎉
+Notable Changes  Fish completion (including support for Go custom completion) @marckhouzam API (urgent): Rename BashCompDirectives to ShellCompDirectives @marckhouzam Remove/replace SetOutput on Command - deprecated @jpmcb add support for autolabel stale PR @xchapter7x Add Labeler Actions @xchapter7x Custom completions coded in Go (instead of Bash) @marckhouzam Partial Revert of #922 @jharshman Add Makefile to project @jharshman Correct documentation for InOrStdin @desponda Apply formatting to templates @jharshman Revert change so help is printed on stdout again @marckhouzam Update md2man to v2.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/projects_using_cobra/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/projects_using_cobra/</guid>
+      <description>Projects using Cobra  Arduino CLI Bleve CockroachDB Cosmos SDK Delve Docker (distribution) Etcd Gardener Giant Swarm&#39;s gsctl Git Bump Github CLI GitHub Labeler Golangci-lint GopherJS Helm Hugo Istio Kool Kubernetes Linkerd Mattermost-server Metal Stack CLI Moby (former Docker) Nanobox/Nanopack OpenShift Ory Hydra Ory Kratos Pouch ProjectAtomic (enterprise) Prototool Random Rclone Skaffold Tendermint Werf  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://spf13.github.io/cobra/license/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://spf13.github.io/cobra/license/</guid>
+      <description>License Cobra is released under the Apache 2.0 license. See LICENSE.txt</description>
+    </item>
+    
+  </channel>
+</rss>
